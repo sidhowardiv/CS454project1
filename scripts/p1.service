@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 User=ec2-user
-WorkingDirectory=/home/ec2-user/CS454project1
-ExecStart=/usr/bin/node /home/ec2-user/CS454project1/server.js
+WorkingDirectory=/home/ec2-user/apps/CS454project1/CS454project1
+ExecStart=/usr/bin/node /home/ec2-user/apps/CS454project1/CS454project1/server.js
 Restart=always
 Environment=PORT=8080
 
