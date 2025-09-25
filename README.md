@@ -7,10 +7,10 @@ Accepts a `lbs` query parameter and returns JSON with the conversion result.
 ---
 
 ## to run 
-git clone https://github.com/sidhowardiv/CS454project1
-cd CS454project1
-npm install
-npm start
+git clone https://github.com/sidhowardiv/CS454project1  
+cd CS454project1  
+npm install  
+npm start  
 
 ---
 
