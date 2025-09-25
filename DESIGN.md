@@ -1,28 +1,26 @@
-# DESIGN
+# DESIGN — EC2 REST Service: Pounds → Kilograms
 
-## Stack
-Node.js + Express with `morgan` for access logs. Lightweight JSON server suitable for a single endpoint.
+## 1) Goal & Requirements
+Provide a tiny HTTP REST service that converts pounds (lbs) to kilograms (kg), deploy it on an AWS EC2 instance, and document how to test it remotely.
 
-## API
-- `GET /convert?lbs=<number>`
-- Uses precise factor `0.45359237`; returns 3-decimal rounded result and echoes the input.
-- Example: `150 lbs -> 68.039 kg`.
+**Functional**
+- `GET /convert?lbs=<number>` → JSON `{ lbs, kg, formula }`
+- Round `kg` to **3 decimals** using factor `0.45359237`.
 
-## Validation & Errors
-- **400** when param missing or not numeric.
-- **422** when negative or non-finite (±Inf/NaN).
+**Validation / Errors**
+- **400 Bad Request** – missing `lbs` or not numeric.
+- **422 Unprocessable Entity** – negative or non-finite (`±Inf/NaN`).
 
-## Deployment
-- Run under `systemd` as `p1` service with `Restart=always` so it auto-starts on boot and restarts on crash.
-- Optional NGINX reverse proxy to expose on port 80.
+**Non-Functional**
+- Runs persistently (auto-start and restart on failure).
+- Publicly reachable for grading.
+- Minimal cost (t*-micro instance).
 
-## Security
-- Security Group: allow SSH (22) only from your IP; allow HTTP (80) or service port (8080) for public access.
-- Run as `ec2-user` (non-root).
+---
 
-## Testing
-- `curl` happy path and error cases.
-- Inspect logs with `journalctl -u p1`.
+## 2) Architecture & Tech Choices
+- **Runtime:** Node.js + Express (small footprint, easy JSON).
+- **Logging:** `morgan` HTTP access logs to stdout (view via `journalctl`).
+- **Endpoint:** Single GET endpoint; simple query string avoids request body parsing.
+- **Rationale:** Fast to implement, clear error handling, precise constant, trivial deploy on AL2.
 
-## Cleanup
-- Terminate EC2 instance, delete unused Security Group and Key Pair.
