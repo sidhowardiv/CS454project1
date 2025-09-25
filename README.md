@@ -19,34 +19,31 @@ curl http://18.222.143.237:8080/convert?lbs=150
 
 ## Test Cases
 
-curl http://18.222.143.237:8080/convert?lbs=0
--> {"lbs":0,"kg":0,"formula":"kg = lbs * 0.45359237"}
+## Test Cases
 
-curl http://18.222.143.237:8080/convert?lbs=0.1
--> {"lbs":0.1,"kg":0.045,"formula":"kg = lbs * 0.45359237"}
+### Successful conversion
+curl http://18.222.143.237:8080/convert?lbs=150
+→ {"lbs":150,"kg":68.039,"formula":"kg = lbs * 0.45359237"}
+![Successful 150 lbs Conversion](docs/screenshots/success150.png)
 
-curl http://18.222.143.237:8080/convert?lbs=-5
-->422 error
+---
 
+### 400 Error – Missing Query Parameter
 curl http://18.222.143.237:8080/convert
--> 400 error
-
-curl http://18.222.143.237:8080/convert?lbs=NaN
--> 400 error
+→ {"error":"Query param lbs is required and must be a number"}
+![400 Error – Missing Query Parameter](docs/screenshots/error400.png)
 
 ---
 
-## Screenshots
-
-### Successful curl requests
-
-
-### Error cases
-
+### 422 Error – Negative Input
+curl http://18.222.143.237:8080/convert?lbs=-5
+→ {"error":"lbs must be a non-negative, finite number"}
+![422 Error – Negative Input](docs/screenshots/error422.png)
 
 ---
 
-## Public Endpoint & Security Group
+### Security group
+![Security Group Inbound Rules](screenshots/security-group.png)
 
 **Public Endpoint:**  
 http://18.222.143.237:8080
