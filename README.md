@@ -27,8 +27,6 @@ curl http://18.222.143.237:8080/convert?lbs=150
 
 ## Test Cases
 
-## Test Cases
-
 ### Successful conversion
 curl http://18.222.143.237:8080/convert?lbs=150
 → {"lbs":150,"kg":68.039,"formula":"kg = lbs * 0.45359237"}
